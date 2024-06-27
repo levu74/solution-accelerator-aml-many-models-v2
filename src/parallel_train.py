@@ -9,7 +9,8 @@ from sklearn.metrics import mean_squared_error
 from sklearn.tree import DecisionTreeRegressor
 
 def init():
-
+    print("Initializing train.py...")
+    
     parser = argparse.ArgumentParser()
 
     parser.add_argument("--drop_cols", type=str)

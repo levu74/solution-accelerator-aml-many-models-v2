@@ -6,7 +6,7 @@ experiment_name: many-model-inference-job
 
 
 settings:
-  default_compute: azureml:mm-cpu-cluster
+  default_compute: azureml:serverless #azureml:mm-cpu-cluster
 
 jobs:
   partition_job:
@@ -25,7 +25,7 @@ jobs:
 
   distributed_inference:
     type: parallel
-    compute: azureml:mm-cpu-cluster
+    #compute: azureml:mm-cpu-cluster
     inputs:
       data_source: 
         path: ${{parent.jobs.partition_job.outputs.tabular_output_data}}
@@ -44,16 +44,16 @@ jobs:
       - Store
       - Brand
     resources:
-      instance_count: 6
+      instance_count: 3
 
     error_threshold: -1
     mini_batch_error_threshold: 5
     logging_level: "INFO"
     input_data: ${{inputs.data_source}}
-    max_concurrency_per_instance: 2
+    max_concurrency_per_instance: 4
     retry_settings:
       max_retries: 2
-      timeout: 600
+      timeout: 60
 
     task:
       type: run_function
